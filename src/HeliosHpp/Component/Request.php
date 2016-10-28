@@ -47,7 +47,7 @@ class Request
      */
     public function __construct($baseUri, $method = '', $endpoint = '', $payload = '')
     {
-        if(!is_string($baseUri)) {
+        if (!is_string($baseUri)) {
             throw new HeliosHppException('The "baseUri" must be provided.');
         }
 
@@ -79,9 +79,9 @@ class Request
                     }
                 ]
             );
-        } catch(ClientException $e) {
+        } catch (ClientException $e) {
             throw new HeliosHppException(Psr7\str($e->getRequest()));
-        } catch(RequestException $e) {
+        } catch (RequestException $e) {
             throw new HeliosHppException(Psr7\str($e->getRequest()));
 //            if($e->hasResponse()) {
 //                echo Psr7\str($e->getResponse());

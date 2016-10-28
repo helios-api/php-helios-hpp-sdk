@@ -30,7 +30,7 @@ class PaymentService implements PaymentServiceInterface
      */
     public function __construct($url)
     {
-        if(!is_string($url)) {
+        if (!is_string($url)) {
             throw new HeliosHppException('The "url" must be provided.');
         }
         $this->url = $url;
@@ -66,7 +66,7 @@ class PaymentService implements PaymentServiceInterface
         try {
             $jsonBody = $response->getBody()->getContents();
             return $this->createResponseObject($jsonBody);
-        } catch(\InvalidArgumentException $exception) {
+        } catch (\InvalidArgumentException $exception) {
             throw new PaymentBodyException("Wrong response body! {$exception->getMessage()}");
         }
     }

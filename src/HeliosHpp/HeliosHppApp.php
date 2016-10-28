@@ -54,7 +54,7 @@ class HeliosHppApp
      */
     public function __construct($accountId, $url, $baseUrl = HeliosHpp::API_BASE_URL, $apiVersion = HeliosHpp::API_VERSION)
     {
-        if(!is_string($accountId) || !is_string($url) || !is_string($baseUrl) || !is_string($apiVersion)) {
+        if (!is_string($accountId) || !is_string($url) || !is_string($baseUrl) || !is_string($apiVersion)) {
             throw new HeliosHppException('The "accountId", "url", "baseUrl" and "apiVersion" must be provided.');
         }
 
@@ -91,7 +91,7 @@ class HeliosHppApp
      */
     public function getPaymentService()
     {
-        if(!($this->paymentService instanceof PaymentServiceInterface)) {
+        if (!($this->paymentService instanceof PaymentServiceInterface)) {
             $this->paymentService = new PaymentService($this->accountId, $this->url);
         }
 
@@ -104,7 +104,7 @@ class HeliosHppApp
      */
     public function getWebHookService()
     {
-        if(!($this->webHookService instanceof WebHookServiceInterface)) {
+        if (!($this->webHookService instanceof WebHookServiceInterface)) {
             $this->webHookService = new WebHookService();
         }
 

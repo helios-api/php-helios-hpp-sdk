@@ -54,7 +54,7 @@ class WebHookService implements WebHookServiceInterface
             $this->verifyMethod($method);
             $body = $body ?: $this->getRequestBody();
             return $paymentStatusChange = $this->verifyRequestBody($body);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             throw new WebHookRequestException("Wrong payment update request! {$exception->getMessage()}");
         }
     }
@@ -108,7 +108,7 @@ class WebHookService implements WebHookServiceInterface
     {
         try {
             return $this->createStatusChange($body);
-        } catch(\InvalidArgumentException $exception) {
+        } catch (\InvalidArgumentException $exception) {
             throw new WebHookBodyException("Wrong request body! {$exception->getMessage()}");
         }
     }
@@ -121,7 +121,7 @@ class WebHookService implements WebHookServiceInterface
      */
     protected function verifyMethod($method)
     {
-        if($method === 'POST') {
+        if ($method === 'POST') {
             return true;
         }
         throw new WebHookMethodException("Wrong request method! Sent $method");

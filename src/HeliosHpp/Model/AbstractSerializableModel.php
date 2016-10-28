@@ -22,10 +22,10 @@ abstract class AbstractSerializableModel
         $reflection = new \ReflectionClass($this);
         $properties = $reflection->getProperties();
 
-        foreach($properties as $property) {
+        foreach ($properties as $property) {
             $getter = "get" . ucfirst($property->getName());
-            if(method_exists($this, $getter)) {
-                if($this->$getter() instanceof AbstractSerializableModel) {
+            if (method_exists($this, $getter)) {
+                if ($this->$getter() instanceof AbstractSerializableModel) {
                     $objectArray = array_merge($objectArray, $this->$getter()->toArray());
                 } else {
                     $objectArray[$this->keyFromProperty($property->getName())] = $this->$getter();
@@ -54,9 +54,9 @@ abstract class AbstractSerializableModel
     {
         $decoded = \GuzzleHttp\json_decode($jsonString);
 
-        foreach($decoded as $key => $value) {
+        foreach ($decoded as $key => $value) {
             $setter = "set" . ucfirst($this->propertyFromKey($key));
-            if(method_exists($this, $setter)) {
+            if (method_exists($this, $setter)) {
                 $this->$setter($value);
             }
         }
