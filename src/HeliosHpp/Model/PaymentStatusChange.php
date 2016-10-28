@@ -169,7 +169,7 @@ class PaymentStatusChange extends AbstractSerializableModel
      */
     public function setCreatedAt($createdAt)
     {
-        if(is_string($createdAt)) {
+        if (is_string($createdAt)) {
             $createdAt = new \DateTime($createdAt);
         }
         $this->createdAt = $createdAt;
