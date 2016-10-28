@@ -4,9 +4,9 @@
 
 [![Build Status](https://img.shields.io/travis/helios-api/php-helios-hpp-sdk/master.svg)](https://travis-ci.org/helios-api/php-helios-hpp-sdk)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/helios-api/php-helios-hpp-sdk/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/helios-api/php-helios-hpp-sdk/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/helios-api/php-helios-hpp-sdk/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/helios-api/php-helios-hpp-sdk/?branch=master)
 
-
-This repository contains the open source PHP SDK that allows you to access the Helios HPP from your PHP app.
+This repository contains the open source PHP SDK that allows you to access the Helios HPP from your PHP app. Documentation fo Helios API  [documentation.dp.ag](http://documentation.dp.ag).
 
 
 ## Installation

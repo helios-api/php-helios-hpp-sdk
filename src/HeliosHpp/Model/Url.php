@@ -36,7 +36,7 @@ class Url
      * @param $cancel
      * @param $complete
      */
-    public function __construct($cancel, $complete, $callback)
+    public function __construct($cancel = '', $complete = '', $callback = '')
     {
         $this->cancel = $cancel;
         $this->complete = $complete;
