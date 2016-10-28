@@ -6,7 +6,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/helios-api/php-helios-hpp-sdk/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/helios-api/php-helios-hpp-sdk/?branch=master)
 
 
-This repository contains the open source PHP SDK that allows you to access the Helios HPP from your PHP app.
+This repository contains the open source PHP SDK that allows you to access the Helios HPP from your PHP app. Documentation fo Helios API  [documentation.dp.ag](http://documentation.dp.ag).
 
 
 ## Installation
