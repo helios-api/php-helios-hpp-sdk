@@ -5,7 +5,8 @@ namespace HeliosHpp\Service;
 use HeliosHpp\Exception\WebHookBodyException;
 use HeliosHpp\Exception\WebHookMethodException;
 use HeliosHpp\Exception\WebHookRequestException;
-use HeliosHpp\Model\PaymentStatusChange;
+use HeliosHpp\Serializer\JsonSerializer;
+use GuzzleHttp\Psr7;
 
 /**
  * Class WebHookService
@@ -29,6 +30,11 @@ class WebHookService implements WebHookServiceInterface
     protected $inputStream;
 
     /**
+     * @var \HeliosHpp\Serializer\JsonSerializer
+     */
+    protected $serializer;
+
+    /**
      * WebHookService constructor.
      *
      * @param string $secret
@@ -37,6 +43,7 @@ class WebHookService implements WebHookServiceInterface
     {
         $this->secret = $secret;
         $this->inputStream;
+        $this->serializer = new JsonSerializer();
     }
 
     /**
@@ -53,7 +60,7 @@ class WebHookService implements WebHookServiceInterface
             $this->verifyRequestSource();
             $this->verifyMethod($method);
             $body = $body ?: $this->getRequestBody();
-            return $paymentStatusChange = $this->verifyRequestBody($body);
+            return $this->verifyRequestBody($body);
         } catch (\Exception $exception) {
             throw new WebHookRequestException("Wrong payment update request! {$exception->getMessage()}");
         }
@@ -107,9 +114,11 @@ class WebHookService implements WebHookServiceInterface
     protected function verifyRequestBody($body)
     {
         try {
-            return $this->createStatusChange($body);
+            return $this->serializer->deserialize($body, "HeliosHpp\\Model\\PaymentStatusChange");
         } catch (\InvalidArgumentException $exception) {
             throw new WebHookBodyException("Wrong request body! {$exception->getMessage()}");
+        } catch (\Exception $exception) {
+            throw new WebHookBodyException($exception->getMessage(), $exception->getCode(), $exception);
         }
     }
 
@@ -125,16 +134,5 @@ class WebHookService implements WebHookServiceInterface
             return true;
         }
         throw new WebHookMethodException("Wrong request method! Sent $method");
-    }
-
-    /**
-     * @param string $jsonString
-     *
-     * @return PaymentStatusChange
-     */
-    protected function createStatusChange($jsonString)
-    {
-        $paymentStatusUpdate = new PaymentStatusChange();
-        return $paymentStatusUpdate->fromJson($jsonString);
     }
 }

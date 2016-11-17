@@ -2,11 +2,7 @@
 
 namespace HeliosHpp\Service;
 
-use GuzzleHttp\Psr7\Response;
 use HeliosHpp\Component\Request;
-use HeliosHpp\Exception\HeliosHppException;
-use HeliosHpp\Exception\PaymentBodyException;
-use HeliosHpp\Model\CreatedPayment;
 use HeliosHpp\Model\Payment;
 
 /**
@@ -16,26 +12,8 @@ use HeliosHpp\Model\Payment;
  *
  * @package HeliosHpp\Service
  */
-class PaymentService implements PaymentServiceInterface
+class PaymentService extends AbstractHppService implements PaymentServiceInterface
 {
-    /**
-     * @var string
-     */
-    protected $url;
-
-    /**
-     * PaymentService constructor.
-     *
-     * @param $url
-     */
-    public function __construct($url)
-    {
-        if (!is_string($url)) {
-            throw new HeliosHppException('The "url" must be provided.');
-        }
-        $this->url = $url;
-    }
-
     /**
      * @param \HeliosHpp\Model\Payment $payment
      *
@@ -49,36 +27,11 @@ class PaymentService implements PaymentServiceInterface
         $request
             ->setMethod('POST')
             ->setEndpoint('/payments')
-            ->setPayload($payment->toJson());
+            ->setAuthorizationToken($this->getAuthorizationToken())
+            ->setPayload($this->serializer->serialize(array('payment' => $payment)));
 
         $response = $request->send();
-        return $this->checkResponse($response);
-    }
-
-    /**
-     * @param \GuzzleHttp\Psr7\Response $response
-     *
-     * @return CreatedPayment
-     * @throws \HeliosHpp\Exception\PaymentBodyException
-     */
-    private function checkResponse(Response $response)
-    {
-        try {
-            $jsonBody = $response->getBody()->getContents();
-            return $this->createResponseObject($jsonBody);
-        } catch (\InvalidArgumentException $exception) {
-            throw new PaymentBodyException("Wrong response body! {$exception->getMessage()}");
-        }
-    }
-
-    /**
-     * @param string $json
-     *
-     * @return CreatedPayment
-     */
-    private function createResponseObject($json)
-    {
-        $createdPayment = new CreatedPayment();
-        return $createdPayment->fromJson($json);
+        $body = $this->checkResponse($response);
+        return $this->serializer->deserialize($body, "HeliosHpp\\Model\\CreatedPayment");
     }
 }

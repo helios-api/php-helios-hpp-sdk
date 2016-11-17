@@ -38,6 +38,11 @@ class Request
     protected $payload;
 
     /**
+     * @var string
+     */
+    protected $authorizationToken;
+
+    /**
      * Request constructor.
      *
      * @param        $baseUri
@@ -45,7 +50,7 @@ class Request
      * @param string $endpoint
      * @param string $payload
      */
-    public function __construct($baseUri, $method = '', $endpoint = '', $payload = '')
+    public function __construct($baseUri, $method = '', $endpoint = '', $payload = '', $authorizationToken = '')
     {
         if (!is_string($baseUri)) {
             throw new HeliosHppException('The "baseUri" must be provided.');
@@ -55,6 +60,7 @@ class Request
         $this->endpoint = $endpoint;
         $this->payload = $payload;
         $this->client = new Client(['base_uri' => $baseUri]);
+        $this->authorizationToken = $authorizationToken;
     }
 
     /**
@@ -70,8 +76,9 @@ class Request
                 $this->getEndpointUrl(),
                 [
                     'headers'  => [
-                        'Content-Type' => 'application/json',
-                        'Accept'     => 'application/json',
+                        'Content-Type'  => 'application/json',
+                        'Accept'        => 'application/json',
+                        'Authorization' => $this->getAuthorizationToken()
                     ],
                     'body'     => $this->payload,
                     'on_stats' => function (TransferStats $stats) use (&$url) {
@@ -166,6 +173,25 @@ class Request
     public function setEndpoint($endpoint)
     {
         $this->endpoint = $endpoint;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthorizationToken()
+    {
+        return $this->authorizationToken;
+    }
+
+    /**
+     * @param string $authorizationToken
+     *
+     * @return Request
+     */
+    public function setAuthorizationToken($authorizationToken)
+    {
+        $this->authorizationToken = $authorizationToken;
         return $this;
     }
 }

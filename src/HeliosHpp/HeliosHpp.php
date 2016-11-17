@@ -52,14 +52,19 @@ class HeliosHpp
         $config = array_merge(
             [
                 'accountId' => getenv(static::APP_ACCOUNT_ID),
-                'url'       => getenv(static::APP_HPP_URL),
-                'baseUrl'   => getenv(static::API_BASE_URL),
-                'apiVersion'   => getenv(static::API_VERSION)
+                'url' => getenv(static::APP_HPP_URL),
+                'baseUrl' => getenv(static::API_BASE_URL),
+                'apiVersion' => getenv(static::API_VERSION)
             ],
             $config
         );
 
-        $this->heliosHppApp = new HeliosHppApp($config['accountId'], $config['url'], $config['baseUrl'], $config['apiVersion']);
+        $this->heliosHppApp = new HeliosHppApp(
+            $config['accountId'],
+            $config['url'],
+            $config['baseUrl'],
+            $config['apiVersion']
+        );
     }
 
     /**

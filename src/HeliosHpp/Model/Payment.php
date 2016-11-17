@@ -2,183 +2,87 @@
 
 namespace HeliosHpp\Model;
 
+use JMS\Serializer\Annotation\Type;
+
 /**
  * Class Payment
  *
- * @TODO    remove account ID after authorization refactor
- *
  * @package HeliosHpp\Model
  */
-class Payment extends AbstractSerializableModel
+class Payment
 {
-    /**
-     * Account ID string
-     *
-     * @var string
-     */
-    private $accountId;
-
     /**
      * Currency string in ISO 4217
      *
+     * @Type("string")
      * @var string
      */
-    private $currency;
+    protected $currency;
 
     /**
      * Transaction amount in integer
      *
+     * @Type("integer")
      * @var integer
      */
-    private $amount;
+    protected $amount;
 
     /**
+     * @Type("string")
      * @var string
      */
-    private $reference;
+    protected $customerEmail;
 
     /**
-     * Transaction timestamp
-     *
-     * @var int
-     */
-    private $timestamp;
-
-    /**
-     * Transaction signature
-     *
+     * @Type("string")
      * @var string
      */
-    private $signature;
+    protected $transactionId;
 
     /**
-     * Additional shipping amount
-     *
+     * @Type("string")
      * @var string
      */
-    private $amountShipping;
+    protected $statementName;
 
     /**
-     * Additional tax amount
-     *
-     * @var string
+     * @Type("HeliosHpp\Model\BillingInfo")
+     * @var BillingInfo
      */
-    private $amountTax;
+    protected $billingInfo;
 
     /**
-     * @var string
+     * @var object
      */
-    private $shopCountry;
-
-    /**
-     * @var string
-     */
-    private $shopName;
-
-    /**
-     * @var string
-     */
-    private $transactionType;
-
-    /**
-     * @var string
-     */
-    private $test;
-
-    /**
-     * Transaction description
-     *
-     * @var string
-     */
-    private $description;
-
-    /**
-     * Url information object
-     *
-     * @var Url
-     */
-    private $url;
-
-    /**
-     * Customer information object
-     *
-     * @var Customer
-     */
-    private $customer;
+    protected $meta;
 
     /**
      * Payment constructor.
      *
-     * @param string                         $accountId
-     * @param string                         $currency
-     * @param integer                        $amount
-     * @param string                         $reference
-     * @param \HeliosHpp\Model\Url           $url
-     * @param int                            $timestamp
-     * @param string                         $signature
-     * @param string                         $amountShipping
-     * @param string                         $amountTax
-     * @param string                         $shopCountry
-     * @param string                         $shopName
-     * @param string                         $transactionType
-     * @param string                         $test
-     * @param string                         $urlCallback
-     * @param string                         $description
-     * @param \HeliosHpp\Model\Customer|null $customer
+     * @param string                       $currency
+     * @param int                          $amount
+     * @param string                       $customerEmail
+     * @param string                       $transactionId
+     * @param string                       $statementName
+     * @param \HeliosHpp\Model\BillingInfo $billingInfo
+     * @param                              $meta
      */
     public function __construct(
-        $accountId,
-        $currency,
-        $amount,
-        $reference = '',
-        Url $url = null,
-        $timestamp = 0,
-        $signature = '',
-        $amountShipping = '',
-        $amountTax = '',
-        $shopCountry = '',
-        $shopName = '',
-        $transactionType = '',
-        $test = '',
-        $urlCallback = '',
-        $description = '',
-        Customer $customer = null
+        $currency = null,
+        $amount = null,
+        $customerEmail = null,
+        $transactionId = null,
+        $statementName = null,
+        \HeliosHpp\Model\BillingInfo $billingInfo = null,
+        $meta = null
     ) {
-        $this->accountId = $accountId;
         $this->currency = $currency;
         $this->amount = $amount;
-        $this->reference = $reference;
-        $this->url = $url;
-        $this->timestamp = $timestamp;
-        $this->signature = $signature;
-        $this->amountShipping = $amountShipping;
-        $this->amountTax = $amountTax;
-        $this->shopCountry = $shopCountry;
-        $this->shopName = $shopName;
-        $this->transactionType = $transactionType;
-        $this->test = $test;
-        $this->urlCallback = $urlCallback;
-        $this->description = $description;
-        $this->customer = $customer;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAccountId()
-    {
-        return $this->accountId;
-    }
-
-    /**
-     * @param string $accountId
-     *
-     * @return Payment
-     */
-    public function setAccountId($accountId)
-    {
-        $this->accountId = $accountId;
-        return $this;
+        $this->customerEmail = $customerEmail;
+        $this->transactionId = $transactionId;
+        $this->statementName = $statementName;
+        $this->billingInfo = $billingInfo;
+        $this->meta = $meta;
     }
 
     /**
@@ -201,7 +105,7 @@ class Payment extends AbstractSerializableModel
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getAmount()
     {
@@ -209,7 +113,7 @@ class Payment extends AbstractSerializableModel
     }
 
     /**
-     * @param integer $amount
+     * @param int $amount
      *
      * @return Payment
      */
@@ -222,228 +126,95 @@ class Payment extends AbstractSerializableModel
     /**
      * @return string
      */
-    public function getReference()
+    public function getCustomerEmail()
     {
-        return $this->reference;
+        return $this->customerEmail;
     }
 
     /**
-     * @param string $reference
+     * @param string $customerEmail
      *
      * @return Payment
      */
-    public function setReference($reference)
+    public function setCustomerEmail($customerEmail)
     {
-        $this->reference = $reference;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTimestamp()
-    {
-        return $this->timestamp;
-    }
-
-    /**
-     * @param int $timestamp
-     *
-     * @return Payment
-     */
-    public function setTimestamp($timestamp)
-    {
-        $this->timestamp = $timestamp;
+        $this->customerEmail = $customerEmail;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getSignature()
+    public function getTransactionId()
     {
-        return $this->signature;
+        return $this->transactionId;
     }
 
     /**
-     * @param string $signature
+     * @param string $transactionId
      *
      * @return Payment
      */
-    public function setSignature($signature)
+    public function setTransactionId($transactionId)
     {
-        $this->signature = $signature;
+        $this->transactionId = $transactionId;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getAmountShipping()
+    public function getStatementName()
     {
-        return $this->amountShipping;
+        return $this->statementName;
     }
 
     /**
-     * @param string $amountShipping
+     * @param string $statementName
      *
      * @return Payment
      */
-    public function setAmountShipping($amountShipping)
+    public function setStatementName($statementName)
     {
-        $this->amountShipping = $amountShipping;
+        $this->statementName = $statementName;
         return $this;
     }
 
     /**
-     * @return string
+     * @return BillingInfo
      */
-    public function getAmountTax()
+    public function getBillingInfo()
     {
-        return $this->amountTax;
+        return $this->billingInfo;
     }
 
     /**
-     * @param string $amountTax
+     * @param BillingInfo $billingInfo
      *
      * @return Payment
      */
-    public function setAmountTax($amountTax)
+    public function setBillingInfo($billingInfo)
     {
-        $this->amountTax = $amountTax;
+        $this->billingInfo = $billingInfo;
         return $this;
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getShopCountry()
+    public function getMeta()
     {
-        return $this->shopCountry;
+        return $this->meta;
     }
 
     /**
-     * @param string $shopCountry
+     * @param mixed $meta
      *
      * @return Payment
      */
-    public function setShopCountry($shopCountry)
+    public function setMeta($meta)
     {
-        $this->shopCountry = $shopCountry;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getShopName()
-    {
-        return $this->shopName;
-    }
-
-    /**
-     * @param string $shopName
-     *
-     * @return Payment
-     */
-    public function setShopName($shopName)
-    {
-        $this->shopName = $shopName;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTransactionType()
-    {
-        return $this->transactionType;
-    }
-
-    /**
-     * @param string $transactionType
-     *
-     * @return Payment
-     */
-    public function setTransactionType($transactionType)
-    {
-        $this->transactionType = $transactionType;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTest()
-    {
-        return $this->test;
-    }
-
-    /**
-     * @param string $test
-     *
-     * @return Payment
-     */
-    public function setTest($test)
-    {
-        $this->test = $test;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     *
-     * @return Payment
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-        return $this;
-    }
-
-    /**
-     * @return Url
-     */
-    public function getUrl()
-    {
-        return $this->url;
-    }
-
-    /**
-     * @param Url $url
-     *
-     * @return Payment
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-        return $this;
-    }
-
-    /**
-     * @return Customer
-     */
-    public function getCustomer()
-    {
-        return $this->customer;
-    }
-
-    /**
-     * @param Customer $customer
-     *
-     * @return Payment
-     */
-    public function setCustomer($customer)
-    {
-        $this->customer = $customer;
+        $this->meta = $meta;
         return $this;
     }
 }

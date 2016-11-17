@@ -2,19 +2,23 @@
 
 namespace HeliosHpp\Model;
 
+use JMS\Serializer\Annotation\Type;
+
 /**
  * Class CreatedPayment
  *
  * @package HeliosHpp\Model
  */
-class CreatedPayment extends AbstractSerializableModel
+class CreatedPayment
 {
     /**
+     * @Type("string")
      * @var string
      */
     protected $token;
 
     /**
+     * @Type("string")
      * @var string
      */
     protected $paymentPageUrl;
