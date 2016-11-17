@@ -7,13 +7,14 @@
         stopOnFailure="false"
         bootstrap="tests/bootstrap.php">
     <testsuites>
-        <testsuite name="Helios HPP PHP SDK Test Suite">
+        <testsuite name="Helios PHP SDK Test Suite">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
             <directory suffix=".php">./src/HeliosHpp</directory>
+            <directory suffix=".php">./src/HeliosApi</directory>
         </whitelist>
     </filter>
     <listeners>
