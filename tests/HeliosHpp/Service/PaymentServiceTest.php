@@ -3,6 +3,7 @@
 namespace HeliosHpp\Service;
 
 use HeliosHpp\Exception\HeliosHppException;
+use HeliosHpp\Model\BillingInfo;
 use HeliosHpp\Model\Payment;
 use HeliosHpp\Tests\HeliosHppTestCredentials;
 use PHPUnit\Framework\TestCase;
@@ -10,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class PaymentServiceTest
  *
- * @TODO implement Helios HPP test suite
+ * @TODO    implement Helios HPP test suite
  *
  * @package HeliosHpp\Service
  */
@@ -31,14 +32,14 @@ class PaymentServiceTest extends TestCase
      */
     public function setUp()
     {
-        if (!file_exists(__DIR__ . '/../HeliosHppTestCredentials.php')) {
+        if(!file_exists(__DIR__ . '/../HeliosHppTestCredentials.php')) {
             throw new HeliosHppException(
                 'You must create a HeliosHppCredentials.php file from HeliosHppTestCredentials.php.dist'
             );
         }
 
-        if (!strlen(HeliosHppTestCredentials::$accountId) ||
-            !strlen(HeliosHppTestCredentials::$url)
+        if(!strlen(HeliosHppTestCredentials::$accountId)
+            || !strlen(HeliosHppTestCredentials::$url)
         ) {
             throw new HeliosHppException(
                 'You must fill out HeliosHppCredentials.php'
@@ -53,7 +54,7 @@ class PaymentServiceTest extends TestCase
      */
     public function testObjectCanBeConstructed()
     {
-        $paymentService = new PaymentService(self::$url);
+        $paymentService = new PaymentService(self::$url, self::$accountId);
 
         $this->assertInstanceOf('HeliosHpp\\Service\\PaymentService', $paymentService);
 
@@ -68,7 +69,6 @@ class PaymentServiceTest extends TestCase
      */
     public function testPaymentCanBeCreated(Payment $payment, PaymentService $paymentService)
     {
-        $payment->setAccountId(self::$accountId);
         $createdPayment = $paymentService->create($payment);
 
         $this->assertInstanceOf('HeliosHpp\\Model\\CreatedPayment', $createdPayment);
@@ -108,9 +108,12 @@ class PaymentServiceTest extends TestCase
         return [
             [
                 new Payment(
-                    '',
                     'EUR',
-                    '2000'
+                    2000,
+                    'john.doe@example.com',
+                    md5(time()),
+                    'Shiny stuff',
+                    new BillingInfo('John', 'Doe', null, 'Example Av. 3', null, 'London', null, 'E10AA', 'GB')
                 )
             ]
         ];
@@ -123,11 +126,7 @@ class PaymentServiceTest extends TestCase
     {
         return [
             [
-                new Payment(
-                    '138fee28-c6f3-4595-9df2-157c5b440a0e:3dW7pdYkppMc@GFqKGgsGmFaTxYuSP40OWPiGHJPBwA',
-                    'USD',
-                    '100'
-                )
+                new Payment()
             ],
         ];
     }

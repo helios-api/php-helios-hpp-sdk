@@ -2,39 +2,47 @@
 
 namespace HeliosHpp\Model;
 
+use JMS\Serializer\Annotation\Type;
+
 /**
  * Class PaymentStatusChange
  *
  * @package HeliosHpp\Model
  */
-class PaymentStatusChange extends AbstractSerializableModel
+class PaymentStatusChange
 {
     /**
+     * @Type("integer")
      * @var integer
      */
     protected $id;
 
     /**
+     * @Type("string")
      * @var string
      */
     protected $eventType;
 
     /**
+     * @Type("string")
      * @var string
      */
     protected $sourceType;
 
     /**
+     * @Type("string")
      * @var string
      */
     protected $payment;
 
     /**
+     * @Type("string")
      * @var string
      */
     protected $sourceId;
 
     /**
+     * @Type("DateTime<'Y-m-d\TH:i:s.uP'>")
      * @var \DateTime
      */
     protected $createdAt;
@@ -49,8 +57,14 @@ class PaymentStatusChange extends AbstractSerializableModel
      * @param string    $sourceId
      * @param \DateTime $createdAt
      */
-    public function __construct($id = null, $eventType = '', $sourceType = '', $payment = '', $sourceId = '', \DateTime $createdAt = null)
-    {
+    public function __construct(
+        $id = null,
+        $eventType = '',
+        $sourceType = '',
+        $payment = '',
+        $sourceId = '',
+        \DateTime $createdAt = null
+    ) {
         $this->id = $id;
         $this->eventType = $eventType;
         $this->sourceType = $sourceType;
