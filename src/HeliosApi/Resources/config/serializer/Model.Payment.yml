@@ -1,0 +1,9 @@
+HeliosApi\Model\Payment:
+    exclusion_policy: NONE
+    properties:
+        id:
+            type: string
+            read_only: true
+        rootId:
+            type: string
+
