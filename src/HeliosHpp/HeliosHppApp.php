@@ -91,7 +91,7 @@ class HeliosHppApp
     public function getPaymentService()
     {
         if (!($this->paymentService instanceof PaymentServiceInterface)) {
-            $this->paymentService = new PaymentService($this->accountId, $this->url);
+            $this->paymentService = new PaymentService($this->url, $this->accountId);
         }
 
         return $this->paymentService;
