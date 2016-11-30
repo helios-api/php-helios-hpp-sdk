@@ -73,7 +73,6 @@ class HeliosHppApp
      */
     public function createPayment(Payment $payment)
     {
-        $payment->setAccountId($this->accountId);
         return $this->getPaymentService()->create($payment);
     }
 
