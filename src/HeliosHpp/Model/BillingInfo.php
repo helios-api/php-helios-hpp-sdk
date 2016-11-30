@@ -2,6 +2,7 @@
 
 namespace HeliosHpp\Model;
 
+use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
 
 /**
@@ -31,12 +32,14 @@ class BillingInfo
 
     /**
      * @Type("string")
+     * @SerializedName("address_1")
      * @var string
      */
     protected $address1;
 
     /**
      * @Type("string")
+     * @SerializedName("address_2")
      * @var string
      */
     protected $address2;
@@ -57,7 +60,7 @@ class BillingInfo
      * @Type("string")
      * @var string
      */
-    protected $zip;
+    protected $zipCode;
 
     /**
      * @Type("string")
@@ -75,7 +78,7 @@ class BillingInfo
      * @param string $address2
      * @param string $city
      * @param string $state
-     * @param string $zip
+     * @param string $zipCode
      * @param string $country
      */
     public function __construct(
@@ -86,7 +89,7 @@ class BillingInfo
         $address2 = null,
         $city = null,
         $state = null,
-        $zip = null,
+        $zipCode = null,
         $country = null
     ) {
         $this->firstName = $firstName;
@@ -96,7 +99,7 @@ class BillingInfo
         $this->address2 = $address2;
         $this->city = $city;
         $this->state = $state;
-        $this->zip = $zip;
+        $this->zipCode = $zipCode;
         $this->country = $country;
     }
 
@@ -236,19 +239,19 @@ class BillingInfo
     /**
      * @return string
      */
-    public function getZip()
+    public function getZipCode()
     {
-        return $this->zip;
+        return $this->zipCode;
     }
 
     /**
-     * @param string $zip
+     * @param string $zipCode
      *
      * @return BillingInfo
      */
-    public function setZip($zip)
+    public function setZipCode($zipCode)
     {
-        $this->zip = $zip;
+        $this->zipCode = $zipCode;
         return $this;
     }
 

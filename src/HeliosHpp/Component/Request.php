@@ -86,10 +86,10 @@ class Request
                     }
                 ]
             );
-        } catch (ClientException $e) {
-            throw new HeliosHppException(Psr7\str($e->getRequest()));
-        } catch (RequestException $e) {
-            throw new HeliosHppException(Psr7\str($e->getRequest()));
+        } catch (ClientException $exception) {
+            throw new HeliosHppException(Psr7\str($exception->getRequest()), $exception->getCode(), $exception);
+        } catch (RequestException $exception) {
+            throw new HeliosHppException(Psr7\str($exception->getRequest()), $exception->getCode(), $exception);
 //            if($e->hasResponse()) {
 //                echo Psr7\str($e->getResponse());
 //            }
